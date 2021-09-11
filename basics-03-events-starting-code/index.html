@@ -14,16 +14,71 @@
   </head>
   <body>
     <header>
-      <h1>Vue Events</h1>
+      <h1>Vue Events, Watchers, Computed, data binding</h1>
     </header>
     <section id="events">
-      <h2>Events in Action</h2>
+      <p>Events</p>
       <button v-on:click="add( 5 )">Add</button>
       <button v-on:click="subtract( 5 )">Remove</button>
-      <p>Result: {{ counter }}</p>
+      <div>Result: {{ counter }}</div>
+      <!-- Adding Text together and using event -->
+      <input type="text" v-on:input="textAndEventHandling( $event , 'counter' )">
+      <div>Your Name: {{ name }}</div>
 
-      <input type="text" v-on:input="textChanged">
-      <p>Your Name: {{ name }}</p>
+      <p> Event Modifiers</p>
+      <!-- EventModifiers (.prevent == event.preventDefault() ) -->
+      <form v-on:submit.prevent="eventModifiers( $event )">
+        <input type="text" >
+        <button>Prevent form submission</button>
+        <br><br>
+        <!-- .right == right click only , .left == left click only -->
+        <button v-on:click.right="subtract( 1 )">Right Click Only Reactivity</button>
+        <br><br>
+        <!-- .enter == filter on only hit the enter key -->
+        <br>
+        <div>
+          <input type="text" v-on:keyup.enter="enterEventModifier( $event )">
+          Enter confirmed Input {{ confirmedName }}
+        </div>
+        
+        <!-- v-once == values never change after initial pageload. -->
+        <div v-once>Starting Counter - {{ counter }}</div>
+      </form>
+
+      <p>Data Binding : {{ dataBindingName }}</p>
+      <div>
+        <span>V-Bind directive: </span>
+        <input type="text" 
+          v-bind:value="dataBindingName" 
+          v-on:input="setDataBindingName($event)"
+        >
+        <button v-on:click="resetDataBindingName($event)">Reset</button>
+      </div>
+      <br>
+      <div>
+        <!-- Identical code both ways -->
+        <span>V-Model Directive (2 way binding): </span>
+        <input type="text" v-model="dataBindingName">
+      </div>
+      <div>
+        <span>String Interpolation: </span>
+        {{ outputFullname() }}
+      </div>
+
+      <p>Computed Properties</p>
+      <div>
+        <span>Basic computed property : </span>
+        <span>{{computedName}}</span>
+      </div>
+
+      <p>Watchers</p>
+      <div>
+        <span>Basic Watcher</span>
+        <input type="text" v-model="watchedName">
+        <br><br>
+        <span>{{ watchedResult }}</span>
+      </div>
+
     </section>
   </body>
 </html>
